@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "669445423505",
+    "project_id": "automate-park-42481",
+    "storage_bucket": "automate-park-42481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669445423505:android:873dade159f55a26cc9a30",
+        "android_client_info": {
+          "package_name": "com.app.smart_parking_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpfc443lJiH62YOlePgOLGj44Hom44Ek8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
