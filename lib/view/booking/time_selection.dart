@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,8 +12,9 @@ import '../../res/common/app_button/main_button.dart';
 
 class TimeSelectionPage extends StatefulWidget {
   final DateTime selectedDate;
+  final Int? slotNumber;
 
-  const TimeSelectionPage({Key? key, required this.selectedDate}) : super(key: key);
+  const TimeSelectionPage({Key? key, required this.selectedDate, this.slotNumber}) : super(key: key);
 
   @override
   State<TimeSelectionPage> createState() => _TimeSelectionPageState();
@@ -21,8 +24,8 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   late DateTime _storedDate; // The date retrieved from Firestore
   bool _isLoading = true;
 
-  TimeOfDay _startTime = TimeOfDay(hour: 10, minute: 0); // Default start time
-  TimeOfDay _endTime = TimeOfDay(hour: 10, minute: 0); // Default end time
+  TimeOfDay _startTime = const TimeOfDay(hour: 10, minute: 0); // Default start time
+  TimeOfDay _endTime = const TimeOfDay(hour: 10, minute: 0); // Default end time
 
   void _bookAppointment() async {
     try {
@@ -42,7 +45,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
       print('Error booking appointment: $e');
       // Show an error message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Error booking appointment. Please try again.'),
         ),
       );
@@ -88,7 +91,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
       // Check if the selected time is in the past
       if (_isTimeInPast(newTime)) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Please select a future time for Start Time.'),
           ),
         );
@@ -109,7 +112,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
       // Check if the selected time is in the past
       if (_isTimeInPast(newTime)) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Please select a future time for End Time.'),
           ),
         );
@@ -154,7 +157,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child: _isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +181,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                               color: Colors.black.withOpacity(0.2),
                               blurRadius: 5,
                               spreadRadius: 1,
-                              offset: Offset(0, 2),
+                              offset: const Offset(0, 2),
                             ),
                           ],
                         ),
@@ -202,28 +205,28 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              _buildTimeDifference(),
-
-                              // for retrieving stored date from select date page
-                              // Column(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     Text(
-                              //       'Stored Date:',
-                              //       style: TextStyle(fontSize: 24),
-                              //     ),
-                              //     Text(
-                              //       DateFormat(' MMM d, yyyy').format(_storedDate),
-                              //       style: TextStyle(fontSize: 20),
-                              //     ),
-                              //     SizedBox(height: 20),
-                              //   ],
-                              // ),
+                              _buildTimeDifference(context),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(height: 80),
+                      const SizedBox(height: 15),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.info_outline_rounded,
+                            size: 19,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "Please first select start and end time properly,\nafter make payment",
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 75),
                       Center(
                         child: SizedBox(
                           width: double.infinity,
@@ -263,7 +266,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
       onPressed: () => onPressed(context),
       style: ElevatedButton.styleFrom(
         backgroundColor: AdaptiveTheme.of(context).mode.isDark ? Colors.grey[800] : const Color.fromRGBO(241, 248, 255, 1),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
       child: Row(
@@ -273,7 +276,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
             Icons.access_time,
             color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(
             title,
             style: TextStyle(
@@ -311,16 +314,15 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
     }
 
     return Container(
-      height: 200,
       width: 130,
       decoration: BoxDecoration(
-        color: AdaptiveTheme.of(context).mode.isDark ? Colors.grey[700] : Color(0xf2ffffff),
+        color: AdaptiveTheme.of(context).mode.isDark ? Colors.grey[700] : const Color(0xf2ffffff),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 5,
             spreadRadius: 1,
-            offset: Offset(3, 5),
+            offset: const Offset(3, 5),
           ),
         ],
         borderRadius: BorderRadius.circular(20),
@@ -334,7 +336,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
             Icon(
               icon,
               size: 60,
-              color: Color.fromRGBO(167, 153, 240, 1),
+              color: const Color.fromRGBO(167, 153, 240, 1),
             ),
             const SizedBox(height: 12),
             Text(
@@ -375,22 +377,48 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
     );
   }
 
-  Widget _buildTimeDifference() {
+  Widget _buildTimeDifference(BuildContext context) {
     final startTime = DateTime(2021, 1, 1, _startTime.hour, _startTime.minute);
     final endTime = DateTime(2021, 1, 1, _endTime.hour, _endTime.minute);
-    final difference = endTime.difference(startTime).inHours;
+    final difference = endTime.difference(startTime);
+
+    int totalMinutes = difference.inMinutes;
+
+    int hours = totalMinutes ~/ 60; // Divide by 60 to get hours
+    int minutes = totalMinutes % 60; // Remainder is minutes
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          "  $difference hours",
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.bold,
-            color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
+        RichText(
+          text: TextSpan(
+            text: '$hours hours',
+            style: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            children: <TextSpan>[
+              if (minutes > 0) // Show minutes only if they are greater than 0
+                TextSpan(
+                  text: ' $minutes minutes',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+            ],
           ),
         ),
+        // Text(
+        //   "  $hours hours $minutes minutes",
+        //   style: TextStyle(
+        //     fontSize: 23,
+        //     fontWeight: FontWeight.bold,
+        //     color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+        //   ),
+        // ),
       ],
     );
   }

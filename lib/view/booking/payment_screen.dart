@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:smart_parking_system/res/common/app_button/main_button.dart';
+import 'package:smart_parking_system/view/booking/booking_page.dart';
 import 'package:smart_parking_system/view/booking/date_selection.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -193,19 +194,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         backgroundColor: AdaptiveTheme.of(context).mode.isDark ? Colors.grey[800] : const Color(0xffe4ebff),
                         mainOnPress: () {
                           int totalAmountPaisa = (ratePerHour * selectedHours).toInt();
+                          print(totalAmountPaisa);
 
                           Razorpay razorpay = Razorpay();
 
                           var options = {
-                            'key': 'rzp_test_Fi99n9Kg6vDDil',
+                            'key': 'rzp_test_cYIYutCiDu13Ut',
                             "currency": "INR",
-                            // 'amount': "$totalAmountPaisa",
-                            // "amount": "${totalAmountPaisa * 100}",
-                            "amount": 50000,
-                            // 'amount': "₹ ${total = ratePerHour * selectedHours}",
-                            // 'amount': "${total! * 100}",
-                            // 'amount': "10000000",
-                            // 'amount': (double.parse(widget.Data!) * 100),
+                            "amount": totalAmountPaisa * 100,
                             'name': 'Automate Park',
                             'description': 'Pay for automate park system',
                             "theme.color": "#F1F8FF",
@@ -236,11 +232,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void handlePaymentErrorResponse(PaymentFailureResponse response) {
-    /*  * PaymentFailureResponse contains three values:
-    * 1. Error Code,
-    * 2. Error Description,
-    * 3. Metadata,
-    * */
     showAlertDialog(
       context,
       "Payment Failed",
@@ -270,43 +261,37 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void handlePaymentSuccessResponse(PaymentSuccessResponse response) {
-    /*
-    * Payment Success Response contains three values:
-    * 1. Order ID
-    * 2. Payment ID
-    * 3. Signature
-    * */
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Expanded(
-          child: AlertDialog(
-            title: QrImageView(data: "data"),
-            content: Text(
-              'Your Payment is Done\n\nPayment ID: ${response.paymentId}\n\nPlease Show This Barcode On camera to open get.',
-            ),
-            actions: [
-              ElevatedButton(
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(
-                    Color(0x80102A5B),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DateSelectionPage(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
+        return AlertDialog(
+          title: QrImageView(data: "data"),
+          content: Text(
+            'Your Payment is Done\n\nPayment ID: ${response.paymentId}\n\nPlease Show This Barcode On camera to open get.',
+          ),
+          actions: [
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(
+                  AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : Color(0xff080d65),
                 ),
               ),
-            ],
-          ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BookingPage(),
+                  ),
+                );
+              },
+              child: Text(
+                'Ok',
+                style: TextStyle(
+                  color: AdaptiveTheme.of(context).mode.isDark ? const Color(0xff080d65) : Color.fromRGBO(241, 248, 255, 1),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -434,3 +419,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
+// 'amount': "$totalAmountPaisa",
+// "amount": 50000,
+// 'amount': "₹ ${total = ratePerHour * selectedHours}",
+// 'amount': "${total! * 100}",
+// 'amount': "10000000",
+// 'amount': (double.parse(widget.Data!) * 100),

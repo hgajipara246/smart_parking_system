@@ -1,74 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:smart_parking_system/view/booking/booking_page.dart';
-// import 'package:smart_parking_system/view/home_screen.dart';
-// import 'package:smart_parking_system/view/profile_page.dart';
-//
-// class BottomScreen extends StatefulWidget {
-//   const BottomScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   State<BottomScreen> createState() => _BottomScreenState();
-// }
-//
-// class _BottomScreenState extends State<BottomScreen> {
-//   final List<Widget> widgetOptions = [
-//     const HomeScreen(),
-//     const BookingPage(),
-//     const ProfilePage(),
-//   ];
-//
-//   int selectedIndex = 0;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       bottomNavigationBar: Padding(
-//         padding: const EdgeInsets.all(15.0),
-//         child: BottomNavigationBar(
-//           type: BottomNavigationBarType.fixed,
-//           items: [
-//             BottomNavigationBarItem(
-//               icon: Image.asset(
-//                 "assets/images/bottomNevigation/Home.png",
-//                 height: 28,
-//                 color: selectedIndex == 0 ? const Color(0xff6d39bd) : const Color(0xff999999),
-//               ),
-//               label: 'Home',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Image.asset(
-//                 "assets/images/bottomNevigation/Document.png",
-//                 height: 30,
-//                 color: selectedIndex == 1 ? const Color(0xff6d39bd) : const Color(0xff999999),
-//               ),
-//               label: 'Booking',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Image.asset(
-//                 "assets/images/profile/Profile.png",
-//                 height: 30,
-//                 color: selectedIndex == 2 ? const Color(0xff6d39bd) : const Color(0xff999999),
-//               ),
-//               label: 'Profile',
-//             ),
-//           ],
-//           currentIndex: selectedIndex,
-//           selectedItemColor: const Color(0xff6d39bd),
-//           unselectedItemColor: const Color(0xff999999),
-//           onTap: (value) {
-//             setState(
-//               () {
-//                 selectedIndex = value;
-//               },
-//             );
-//           },
-//         ),
-//       ),
-//       body: widgetOptions.elementAt(selectedIndex),
-//     );
-//   }
-// }
-
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +5,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parking_system/view/home_screen.dart';
 import 'package:smart_parking_system/view/profile/profile_page.dart';
 
-import '../booking/date_selection.dart';
+import '../booking/booking_page.dart';
 
 class BottomScreen extends StatefulWidget {
   const BottomScreen({Key? key}) : super(key: key);
@@ -89,8 +18,8 @@ class _BottomScreenState extends State<BottomScreen> {
   // Use 'const' for widgets to avoid unnecessary rebuilds
   final List<Widget> _widgetOptions = const [
     HomeScreen(),
-    // BookingPage(),
-    DateSelectionPage(),
+    BookingPage(),
+    // DateSelectionPage(),
     ProfilePage(),
   ];
   int _selectedIndex = 0; // Change 'selectedIndex' to '_selectedIndex'
