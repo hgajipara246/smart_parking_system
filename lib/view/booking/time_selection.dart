@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +10,7 @@ import '../../res/common/app_button/main_button.dart';
 
 class TimeSelectionPage extends StatefulWidget {
   final DateTime selectedDate;
-  final Int? slotNumber;
+  final int? slotNumber;
 
   const TimeSelectionPage({Key? key, required this.selectedDate, this.slotNumber}) : super(key: key);
 
@@ -21,11 +19,11 @@ class TimeSelectionPage extends StatefulWidget {
 }
 
 class _TimeSelectionPageState extends State<TimeSelectionPage> {
-  late DateTime _storedDate; // The date retrieved from Firestore
+  late DateTime? _storedDate;
   bool _isLoading = true;
 
-  TimeOfDay _startTime = const TimeOfDay(hour: 10, minute: 0); // Default start time
-  TimeOfDay _endTime = const TimeOfDay(hour: 10, minute: 0); // Default end time
+  TimeOfDay _startTime = const TimeOfDay(hour: 10, minute: 0);
+  TimeOfDay _endTime = const TimeOfDay(hour: 10, minute: 0);
 
   void _bookAppointment() async {
     try {
@@ -33,16 +31,16 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
       String? uid = FirebaseAuth.instance.currentUser?.uid;
 
       if (uid != null) {
-        // Create a new document with a unique ID in 'bookings' collection
         await FirebaseFirestore.instance.collection('bookings').doc(uid).set({
           'selectedDate': widget.selectedDate,
-          'startTime': _startTime.format(context), // Save formatted start time
-          'endTime': _endTime.format(context), // Save formatted end time
-          'totalHours': _calculateTimeDifference(_startTime, _endTime), // Save total hours
+          'startTime': _startTime.format(context),
+          'endTime': _endTime.format(context),
+          'totalHours': _calculateTimeDifference(_startTime, _endTime),
+          'slotNumber': widget.slotNumber,
         });
       }
     } catch (e) {
-      print('Error booking appointment: $e');
+      debugPrint('Error booking appointment: $e');
       // Show an error message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -58,12 +56,10 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
       String? uid = FirebaseAuth.instance.currentUser?.uid;
 
       if (uid != null) {
-        // Retrieve the user's document from 'bookings' collection
         DocumentSnapshot userBookingSnapshot = await FirebaseFirestore.instance.collection('bookings').doc(uid).get();
         Map<String, dynamic>? data = userBookingSnapshot.data() as Map<String, dynamic>?;
         if (data != null && data.containsKey("selectedDate")) {
           Timestamp timestamp = data["selectedDate"] as Timestamp;
-          // Convert the Timestamp to DateTime
           _storedDate = timestamp.toDate();
         }
       }
@@ -79,6 +75,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   @override
   void initState() {
     super.initState();
+    print("Slot Number is : ${widget.slotNumber}");
     fetchStoredDate();
   }
 
@@ -236,8 +233,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => PaymentScreen(
-                                      title: 'Make Payment', // Provide the title
-                                      data: 'Your Data Here', // Provide the data
+                                      slotNumber: widget.slotNumber,
                                       startTime: _startTime,
                                       endTime: _endTime,
                                       selectedDate: DateFormat('MMM dd, yyyy').format(widget.selectedDate),

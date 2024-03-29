@@ -172,16 +172,17 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
         // Set the document with the booking data
         await userBookingRef.set(bookingData);
         debugPrint("date : {$selectedDate}");
-        // Navigate to the next page for selecting start and end time
+
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => TimeSelectionPage(
               selectedDate: selectedDate,
-              // slotNumber: widget.slotNumber.toInt(),
+              slotNumber: widget.slotNumber,
             ),
           ),
         );
+        print("Slot Number is : ${widget.slotNumber}");
       }
     } catch (e) {
       debugPrint('Error saving date to Firestore: $e');

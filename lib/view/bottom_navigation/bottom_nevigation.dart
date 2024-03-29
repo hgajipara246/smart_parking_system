@@ -2,10 +2,9 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parking_system/view/booking/booking_page.dart';
 import 'package:smart_parking_system/view/home_screen.dart';
 import 'package:smart_parking_system/view/profile/profile_page.dart';
-
-import '../booking/booking_page.dart';
 
 class BottomScreen extends StatefulWidget {
   const BottomScreen({Key? key}) : super(key: key);

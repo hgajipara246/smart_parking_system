@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:smart_parking_system/model/remotely_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   UserModel userModel = UserModel();
   bool isLoading = true;
-  String qrData = 'https://www.youtube.com/watch?v=JpiqW0bm22o'; // Initial QR data
 
   String profileImage() {
     String profileImagePath = "assets/images/profile/person.png"; // Default profile image path
@@ -75,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: isLoading
           ? const Center(
@@ -145,55 +143,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FutureBuilder<String>(
-                              future: generateQRCodeUrl(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return const CircularProgressIndicator();
-                                } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
-                                } else {
-                                  String qrImageUrl = snapshot.data ?? '';
-                                  return Column(
-                                    children: [
-                                      Image.network(qrImageUrl),
-                                      const SizedBox(height: 20),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          generateQRCodeUrl().then(
-                                            (url) {
-                                              showDialog(
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: const Text('Generated QR Code URL'),
-                                                    content: SelectableText(url ?? ''),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                        child: const Text('Close'),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                        child: const Text('Store &  Generate New QR Code'),
-                                      ),
-                                    ],
-                                  );
-                                }
-                              },
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
@@ -202,45 +151,52 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
     );
   }
+}
 
-  Future<String> generateQRCodeUrl() async {
-    // Generate QR code as image
-    Uint8List qrImageData = await generateQRCodeImageData(qrData);
+class PaymentAllData {
+  final String selectedDate;
+  final String startTime;
+  final String endTime;
+  final int totalHour;
+  final int slotNumber;
+  final double price;
+  final double total;
+  final String qrCodeUrl;
 
-    // Upload QR code image to Firebase Storage
-    String qrImagePath = await uploadQRCodeImage(qrImageData);
+  PaymentAllData({
+    required this.selectedDate,
+    required this.startTime,
+    required this.endTime,
+    required this.totalHour,
+    required this.slotNumber,
+    required this.price,
+    required this.total,
+    required this.qrCodeUrl,
+  });
 
-    return qrImagePath;
+  factory PaymentAllData.fromMap(Map<String, dynamic> map) {
+    return PaymentAllData(
+      selectedDate: map['selectedDate'],
+      startTime: map['startTime'],
+      endTime: map['endTime'],
+      totalHour: map['totalHour'],
+      slotNumber: map['slotNumber'],
+      price: map['price'],
+      total: map['total'],
+      qrCodeUrl: map['qrCodeUrl'],
+    );
   }
 
-  Future<Uint8List> generateQRCodeImageData(String qrString) async {
-    final qrCode = QrCode.fromData(
-      data: qrString,
-      errorCorrectLevel: QrErrorCorrectLevel.H,
-    );
-    final painter = QrPainter(
-      gapless: true,
-      eyeStyle: QrEyeStyle(eyeShape: QrEyeShape.circle),
-      dataModuleStyle: QrDataModuleStyle(
-        dataModuleShape: QrDataModuleShape.circle,
-      ),
-      data: "https://www.youtube.com/watch?v=lY8Mwtst_Mk&list=RDGMEMCMFH2exzjBeE_zAHHJOdxgVM9Dk9dyuaZhw&index=6",
-      color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : Color(0xff080d65),
-      version: QrVersions.auto,
-    );
-    final qrImageData = await painter.toImageData(200.0);
-
-    return qrImageData!.buffer.asUint8List();
-  }
-
-  Future<String> uploadQRCodeImage(Uint8List qrImageData) async {
-    String filePath = 'qrcodes/${firebaseAuth!.currentUser!.uid}.png';
-    Reference storageReference = firebaseStorage!.ref().child(filePath);
-    UploadTask uploadTask = storageReference.putData(qrImageData);
-    debugPrint("---------------------------------------------- IMAGE STORED SUCCESSFULLY ----------------------------------------------");
-    await uploadTask.whenComplete(() => null);
-
-    String downloadUrl = await storageReference.getDownloadURL();
-    return downloadUrl;
+  Map<String, dynamic> toMap() {
+    return {
+      'selectedDate': selectedDate,
+      'startTime': startTime,
+      'endTime': endTime,
+      'totalHour': totalHour,
+      'slotNumber': slotNumber,
+      'price': price,
+      'total': total,
+      'qrCodeUrl': qrCodeUrl,
+    };
   }
 }
