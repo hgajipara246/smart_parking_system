@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       ),
       dark: ThemeData(
         useMaterial3: true,
+
         brightness: Brightness.dark,
         primarySwatch: Colors.orange, // Set primary color to orange
         hintColor: Colors.blue,

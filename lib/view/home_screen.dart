@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_parking_system/model/remotely_model.dart';
+import 'package:smart_parking_system/model/parking_model.dart';
+
+import 'booking/payment_all_details.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   UserModel userModel = UserModel();
   bool isLoading = true;
+
+  List<PaymentModel> paymentList = [];
 
   String profileImage() {
     String profileImagePath = "assets/images/profile/person.png"; // Default profile image path
@@ -40,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
     firebaseFirestore = FirebaseFirestore.instance;
     firebaseStorage = FirebaseStorage.instance;
     getUser();
+
+    getRecentPayments(); // Fetch recent payments
     super.initState();
   }
 
@@ -56,6 +62,21 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         isLoading = false;
       });
+    });
+  }
+
+  void getRecentPayments() {
+    CollectionReference payments = firebaseFirestore!.collection("paymentsDetails");
+    payments.orderBy('selectedDate', descending: true).limit(5).get().then((querySnapshot) {
+      List<PaymentModel> tempList = [];
+      querySnapshot.docs.forEach((doc) {
+        tempList.add(PaymentModel.fromSnapshot(doc));
+      });
+      setState(() {
+        paymentList = tempList;
+      });
+    }).catchError((error) {
+      debugPrint("Failed to get payments: $error");
     });
   }
 
@@ -133,16 +154,51 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 20),
                         Text(
                           "Your Recent Activity",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 22,
                             color: Theme.of(context).textTheme.headline1!.color,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        Text(
+                          "Use recent activity for show your slot details",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).textTheme.headline1!.color,
+                          ),
+                        ),
+                        const Divider(),
                         const SizedBox(height: 8),
+                        paymentList.isEmpty
+                            ? Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 48.0),
+                                  child: Container(
+                                    child: Text(
+                                      "No Recent Activity Found!",
+                                      style: TextStyle(
+                                        color: Theme.of(context).textTheme.headline1!.color,
+                                      ),
+                                    ),
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: AdaptiveTheme.of(context).mode.isDark ? Colors.grey[850] : Colors.blue[50],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: paymentList.length,
+                                itemBuilder: (context, index) {
+                                  return buildPaymentItem(context, paymentList[index], index);
+                                },
+                              ),
                       ],
                     ),
                   ),
@@ -151,52 +207,143 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
     );
   }
-}
 
-class PaymentAllData {
-  final String selectedDate;
-  final String startTime;
-  final String endTime;
-  final int totalHour;
-  final int slotNumber;
-  final double price;
-  final double total;
-  final String qrCodeUrl;
+  Widget buildPaymentItem(BuildContext context, PaymentModel payment, int index) {
+    int displayIndex = index + 1;
 
-  PaymentAllData({
-    required this.selectedDate,
-    required this.startTime,
-    required this.endTime,
-    required this.totalHour,
-    required this.slotNumber,
-    required this.price,
-    required this.total,
-    required this.qrCodeUrl,
-  });
-
-  factory PaymentAllData.fromMap(Map<String, dynamic> map) {
-    return PaymentAllData(
-      selectedDate: map['selectedDate'],
-      startTime: map['startTime'],
-      endTime: map['endTime'],
-      totalHour: map['totalHour'],
-      slotNumber: map['slotNumber'],
-      price: map['price'],
-      total: map['total'],
-      qrCodeUrl: map['qrCodeUrl'],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PaymentAllDetails(payment: payment),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 8.0,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AdaptiveTheme.of(context).mode.isDark ? Colors.white12 : const Color.fromRGBO(241, 248, 255, 1),
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${displayIndex}.", // Display index here
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Slot: ${payment.slotNumber}",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Date: ${payment.selectedDate}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Time: ${payment.startTime} - ${payment.endTime}",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Amount: ₹${payment.total}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AdaptiveTheme.of(context).mode.isDark ? Colors.green : Colors.black, // Adjusted color based on theme
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
+                SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Stack(
+                    children: [
+                      payment.qrCodeUrl.isNotEmpty
+                          ? Image.network(
+                              payment.qrCodeUrl,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'assets/images/spinner.gif',
+                              fit: BoxFit.cover,
+                            ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AdaptiveTheme.of(context).mode.isDark ? Colors.black : const Color.fromRGBO(241, 248, 255, 1),
+                          ),
+                          child: PopupMenuButton(
+                            iconSize: 20,
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                height: 20,
+                                value: 'delete',
+                                child: Text('Delete'),
+                              ),
+                            ],
+                            onSelected: (value) {
+                              if (value == 'delete') {
+                                // Delete the payment from the list
+                                setState(() {
+                                  paymentList.remove(payment);
+                                });
+                              }
+                            },
+                            icon: const Icon(Icons.more_vert),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'selectedDate': selectedDate,
-      'startTime': startTime,
-      'endTime': endTime,
-      'totalHour': totalHour,
-      'slotNumber': slotNumber,
-      'price': price,
-      'total': total,
-      'qrCodeUrl': qrCodeUrl,
-    };
   }
 }

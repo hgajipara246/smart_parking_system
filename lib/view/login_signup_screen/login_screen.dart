@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_parking_system/model/remotely_model.dart';
+import 'package:smart_parking_system/model/parking_model.dart';
 import 'package:smart_parking_system/res/common/app_button/main_button.dart';
 import 'package:smart_parking_system/res/common/app_button/text_button.dart';
 import 'package:smart_parking_system/res/common/app_textformfild.dart';

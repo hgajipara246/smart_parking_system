@@ -296,7 +296,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       String imageUrl = await ref.getDownloadURL();
 
       // Save payment details along with QR Code URL to Firestore
-      await FirebaseFirestore.instance.collection('payments').add({
+      await FirebaseFirestore.instance.collection('paymentsDetails').add({
         'selectedDate': widget.selectedDate,
         'startTime': _formatTimeOfDay(widget.startTime),
         'endTime': _formatTimeOfDay(widget.endTime),
@@ -306,6 +306,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         'total': total,
         'qrCodeUrl': imageUrl, // Save QR Code image URL
       });
+      debugPrint("your all Payment Details are stored in database...................!");
 
       // Show success message
       showDialog(
@@ -318,11 +319,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
               data: qrData,
               eyeStyle: QrEyeStyle(
                 eyeShape: QrEyeShape.circle,
-                color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : Color(0xff080d65),
+                color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : const Color(0xff080d65),
               ),
               dataModuleStyle: QrDataModuleStyle(
                 dataModuleShape: QrDataModuleShape.circle,
-                color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : Color(0xff080d65),
+                color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : const Color(0xff080d65),
               ),
             ),
             content: Text(
@@ -346,7 +347,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         },
       );
     } catch (e) {
-      print('Error uploading image: $e');
+      debugPrint('Error uploading image: $e');
       // Handle error
     }
   }

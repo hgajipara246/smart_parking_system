@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_parking_system/model/remotely_model.dart';
+import 'package:smart_parking_system/model/parking_model.dart';
 import 'package:smart_parking_system/utils/utils.dart';
 import 'package:smart_parking_system/view/login_signup_screen/login_screen.dart';
 import 'package:smart_parking_system/view/profile/profile_details.dart';

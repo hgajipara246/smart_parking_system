@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:smart_parking_system/model/remotely_model.dart';
+import 'package:smart_parking_system/model/parking_model.dart';
 import 'package:smart_parking_system/utils/utils.dart';
 
 class ProfileDetails extends StatefulWidget {

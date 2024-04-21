@@ -208,16 +208,17 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            Icons.info_outline_rounded,
+                            Icons.info,
                             size: 19,
+                            color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
                           ),
-                          SizedBox(width: 5),
-                          Text(
+                          const SizedBox(width: 5),
+                          const Text(
                             "Please first select start and end time properly,\nafter make payment",
                             textAlign: TextAlign.center,
                           ),
