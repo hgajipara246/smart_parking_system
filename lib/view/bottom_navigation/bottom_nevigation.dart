@@ -18,6 +18,7 @@ class _BottomScreenState extends State<BottomScreen> {
   final List<Widget> _widgetOptions = const [
     HomeScreen(),
     BookingPage(),
+
     // DateSelectionPage(),
     ProfilePage(),
   ];

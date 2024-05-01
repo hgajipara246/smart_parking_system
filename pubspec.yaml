@@ -60,8 +60,9 @@ dependencies:
   ticket_widget: ^1.0.2
   json_annotation: ^4.8.1
   firebase_database:
-  http: ^1.2.1
   firebase_performance: ^0.9.4
+  http: ^1.2.1
+
 
 
 
