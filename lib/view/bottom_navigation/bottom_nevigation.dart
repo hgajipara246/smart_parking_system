@@ -19,6 +19,9 @@ class _BottomScreenState extends State<BottomScreen> {
     HomeScreen(),
     BookingPage(),
 
+    // PickParkingSlot(
+    //   receivedData: 'done',
+    // ),
     // DateSelectionPage(),
     ProfilePage(),
   ];
