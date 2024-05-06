@@ -65,6 +65,16 @@ To set up the Smart Parking System, you'll need the following components:
 - Ensure Firebase Realtime Database security rules are appropriately configured.
 
 
+📱Mobile Application User Interface :
+   1. Splash Screen
+
+
+
+
+![Screenshot_20240502_201417](https://github.com/hgajipara246/smart_parking_system/assets/115713866/4059b275-9ea9-474a-80ee-b9a02e2a806f)
+
+
+
 👍 Contributing
 
 Contributions to the project are welcome! Feel free to submit pull requests with any improvements or bug fixes.
