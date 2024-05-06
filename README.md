@@ -70,7 +70,17 @@ To set up the Smart Parking System, you'll need the following components:
 
 
 
-![Screenshot_20240502_201417](https://github.com/hgajipara246/smart_parking_system/assets/115713866/4059b275-9ea9-474a-80ee-b9a02e2a806f)
+
+
+![Untitled design (2)](https://github.com/hgajipara246/smart_parking_system/assets/115713866/5d4269ee-56b2-4e88-99a9-bcd6d66c44d2)
+![Untitled design (3)](https://github.com/hgajipara246/smart_parking_system/assets/115713866/ec2e164e-937a-4e2c-a5a9-eebb383df28a)
+![Untitled design (4)](https://github.com/hgajipara246/smart_parking_system/assets/115713866/f4803f05-bdff-4916-978e-998fb1ba7062)
+![Untitled design (5)](https://github.com/hgajipara246/smart_parking_system/assets/115713866/51b5b296-f131-45ee-8cbe-3cef553f3453)
+![Automate Park](https://github.com/hgajipara246/smart_parking_system/assets/115713866/1ff67a39-6bbb-46c7-8db0-da9ea5839837)
+
+
+
+
 
 
 
