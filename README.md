@@ -39,7 +39,7 @@ To set up the Smart Parking System, you'll need the following components:
    - Install necessary libraries for QR code scanning on Raspberry Pi.
    - Configure the Raspberry Pi to communicate with the Firebase Realtime Database.
 
-   Ir Sensor Connectivity :
+   Ir Sensor Connectivity with Raspberry pi :
 
 
 
@@ -51,8 +51,14 @@ To set up the Smart Parking System, you'll need the following components:
    - Program the ESP32 Cam to capture images and send them to the Raspberry Pi.
    - Integrate QR code scanning functionality into the ESP32 Cam.
   
+     ESP32 Cam & Servo Motor connectivity with raspberry Pi :
 
 
+
+
+     ![image](https://github.com/hgajipara246/smart_parking_system/assets/115713866/077affca-5d91-4674-8e49-2cc0ced0345f)
+
+  
 🔒 Security Considerations
 
 - Implement proper encryption methods to secure communication between components.
