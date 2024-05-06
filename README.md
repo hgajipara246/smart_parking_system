@@ -44,8 +44,7 @@ To set up the Smart Parking System, you'll need the following components:
 
 
 
-      ![Screenshot 2024-05-02 231214](https://github.com/hgajipara246/smart_parking_system/assets/115713866/722a1151-9cd6-4079-80c6-701f19dd0a04)
-
+ 
 
 3. ESP32 Cam Setup:
    - Program the ESP32 Cam to capture images and send them to the Raspberry Pi.
