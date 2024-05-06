@@ -66,12 +66,14 @@ To set up the Smart Parking System, you'll need the following components:
 
 
 📱Mobile Application User Interface :
-   1. Splash Screen
 
 
 
 
-![Screenshot_20240502_201417](https://github.com/hgajipara246/smart_parking_system/assets/115713866/4059b275-9ea9-474a-80ee-b9a02e2a806f)
+
+![Screenshot_20240502_201417](https://github.com/hgajipara246/smart_parking_system/assets/115713866/4059b275-9ea9-474a-80ee-b9a02e2a806f)![Screenshot_20240502_202128](https://github.com/hgajipara246/smart_parking_system/assets/115713866/affa0799-b727-4fd4-b202-e993218910c8)![Screenshot_20240502_202139](https://github.com/hgajipara246/smart_parking_system/assets/115713866/7ef49fb0-a792-4bd4-88f5-a0bbc29f07ba)
+
+
 
 
 
