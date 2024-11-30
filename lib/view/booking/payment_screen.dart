@@ -101,7 +101,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const Center(
@@ -313,22 +312,90 @@ class _PaymentScreenState extends State<PaymentScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: QrImageView(
-              gapless: true,
-              version: QrVersions.auto,
-              data: qrData,
-              eyeStyle: QrEyeStyle(
-                eyeShape: QrEyeShape.circle,
-                color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : const Color(0xff080d65),
-              ),
-              dataModuleStyle: QrDataModuleStyle(
-                dataModuleShape: QrDataModuleShape.circle,
-                color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : const Color(0xff080d65),
+            title: Center(
+              child: SizedBox(
+                width: 550,
+                height: 250,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Payment Successfully",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 7),
+                    Expanded(
+                      child: QrImageView(
+                        gapless: true,
+                        version: QrVersions.auto,
+                        data: qrData,
+                        eyeStyle: QrEyeStyle(
+                          eyeShape: QrEyeShape.circle,
+                          color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : const Color(0xff080d65),
+                        ),
+                        dataModuleStyle: QrDataModuleStyle(
+                          dataModuleShape: QrDataModuleShape.circle,
+                          color: AdaptiveTheme.of(context).mode.isDark ? const Color.fromRGBO(241, 248, 255, 1) : const Color(0xff080d65),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            content: Text(
-              'Your Payment is Done\n\nPayment ID: ${response.paymentId}\n\n'
-              'Show this QR Code parking barrier and access your parking slot.',
+            content: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Your Payment is Done\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
+                        height: 2.5, // Adjust line height for space between text lines
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Payment ID : ',
+                      style: TextStyle(fontSize: 15, color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black, height: 2.0 // Adjust line height for space between text lines
+                          ),
+                    ),
+                    TextSpan(
+                      text: '${response.paymentId}\n',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
+                        height: 1.5, // Adjust line height for space between text lines
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Note : ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
+                        height: 2.0, // Adjust line height for space between text lines
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Show this QR Code at the parking barrier and access your parking slot.',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
+                        height: 1.5, // Adjust line height for space between text lines
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             actions: [
               ElevatedButton(

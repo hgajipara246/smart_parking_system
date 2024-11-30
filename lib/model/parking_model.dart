@@ -79,7 +79,58 @@ class UserModel {
 //   }
 // }
 
+// class PaymentModel {
+//   String selectedDate;
+//   int slotNumber;
+//   String startTime;
+//   String endTime;
+//   int total;
+//   String qrCodeUrl;
+//
+//   PaymentModel({
+//     required this.selectedDate,
+//     required this.slotNumber,
+//     required this.startTime,
+//     required this.endTime,
+//     required this.total,
+//     required this.qrCodeUrl,
+//   });
+//
+//   factory PaymentModel.fromSnapshot(DocumentSnapshot snapshot) {
+//     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+//     return PaymentModel(
+//       selectedDate: data['selectedDate'] ?? '',
+//       slotNumber: data['slotNumber'] ?? 0,
+//       startTime: data['startTime'] ?? '',
+//       endTime: data['endTime'] ?? '',
+//       total: data['total'] ?? 0,
+//       qrCodeUrl: data['qrCodeUrl'] ?? '',
+//     );
+//   }
+//
+//   Map<String, dynamic> toJson() => {
+//         "selectedDate": selectedDate,
+//         "slotNumber": slotNumber,
+//         "startTime": startTime,
+//         "endTime": endTime,
+//         "total": total,
+//         "qrCodeUrl": qrCodeUrl,
+//       };
+//
+//   factory PaymentModel.fromJson(Map<String, dynamic> json) {
+//     return PaymentModel(
+//       selectedDate: json["selectedDate"],
+//       slotNumber: json["slotNumber"],
+//       startTime: json["startTime"],
+//       endTime: json["endTime"],
+//       total: json["total"],
+//       qrCodeUrl: json["qrCodeUrl"],
+//     );
+//   }
+// }
+
 class PaymentModel {
+  String id; // Add an id property
   String selectedDate;
   int slotNumber;
   String startTime;
@@ -88,6 +139,7 @@ class PaymentModel {
   String qrCodeUrl;
 
   PaymentModel({
+    required this.id, // Initialize the id
     required this.selectedDate,
     required this.slotNumber,
     required this.startTime,
@@ -99,6 +151,7 @@ class PaymentModel {
   factory PaymentModel.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return PaymentModel(
+      id: snapshot.id, // Set the id from the document ID
       selectedDate: data['selectedDate'] ?? '',
       slotNumber: data['slotNumber'] ?? 0,
       startTime: data['startTime'] ?? '',
@@ -119,6 +172,7 @@ class PaymentModel {
 
   factory PaymentModel.fromJson(Map<String, dynamic> json) {
     return PaymentModel(
+      id: json["id"], // Include id in fromJson method
       selectedDate: json["selectedDate"],
       slotNumber: json["slotNumber"],
       startTime: json["startTime"],

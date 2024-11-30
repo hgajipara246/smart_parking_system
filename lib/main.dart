@@ -31,20 +31,25 @@ class MyApp extends StatelessWidget {
     return AdaptiveTheme(
       light: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.light,
-        primarySwatch: Colors.orange, // Set primary color to orange
+        brightness: Brightness.light, // Set primary color to orange
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color(0xff080D65),
+          error: Colors.red,
+        ),
         hintColor: Colors.blue,
-        textTheme: const TextTheme(bodyText2: TextStyle(fontFamily: "Lato")),
-        errorColor: Colors.red,
+        textTheme: const TextTheme(bodyMedium: TextStyle(fontFamily: "Lato")),
       ),
       dark: ThemeData(
-        useMaterial3: true,
+        useMaterial3: false,
 
-        brightness: Brightness.dark,
-        primarySwatch: Colors.orange, // Set primary color to orange
+        brightness: Brightness.dark, // Set primary color to orange
+
+        colorScheme: ColorScheme.fromSwatch(brightness: Brightness.dark).copyWith(
+          primary: const Color(0xff080D65),
+          error: Colors.red,
+        ),
         hintColor: Colors.blue,
-        textTheme: const TextTheme(bodyText2: TextStyle(fontFamily: "Lato")),
-        errorColor: Colors.red,
+        textTheme: const TextTheme(bodyMedium: TextStyle(fontFamily: "Lato")),
       ),
       initial: savedThemeMode ?? AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp(

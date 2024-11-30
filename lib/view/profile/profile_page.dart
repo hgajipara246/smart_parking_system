@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parking_system/model/parking_model.dart';
 import 'package:smart_parking_system/utils/utils.dart';
 import 'package:smart_parking_system/view/login_signup_screen/login_screen.dart';
+import 'package:smart_parking_system/view/profile/admin_panel.dart';
 import 'package:smart_parking_system/view/profile/profile_details.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -81,6 +82,12 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   }
 
   void onNotificationTap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AdminPanel(),
+      ),
+    );
     // Implement your logic for Notification here
     print('Notification tapped');
   }
@@ -242,7 +249,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                   const SizedBox(height: 15),
                   _buildAnimatedRow(
                     imageAsset: "assets/images/profile/Notification.png",
-                    text: "Notification",
+                    text: "User Admin",
                     onTap: onNotificationTap,
                   ),
                   const SizedBox(height: 15),
