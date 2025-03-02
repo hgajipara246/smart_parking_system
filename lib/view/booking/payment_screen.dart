@@ -328,7 +328,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         color: AdaptiveTheme.of(context).mode.isDark ? Colors.white : Colors.black,
                       ),
                     ),
-                    SizedBox(height: 7),
+                    const SizedBox(height: 7),
                     Expanded(
                       child: QrImageView(
                         gapless: true,
@@ -349,7 +349,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             content: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: RichText(
                 text: TextSpan(
                   children: [

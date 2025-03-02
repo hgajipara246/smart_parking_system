@@ -85,16 +85,16 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AdminPanel(),
+        builder: (context) => const AdminPanel(),
       ),
     );
     // Implement your logic for Notification here
-    print('Notification tapped');
+    debugPrint('Notification tapped');
   }
 
   void onHelpTap() {
     // Implement your logic for Help here
-    print('Help tapped');
+    debugPrint('Help tapped');
   }
 
   void onDarkThemeToggle(bool value) {
@@ -112,8 +112,8 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text("Logout"),
-          content: Column(
+          title: const Text("Logout"),
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text("Are you sure you want to logout?"),
@@ -124,8 +124,8 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
               onPressed: () {
                 Navigator.of(context).pop(false); // Dismiss the dialog and return false
               },
-              child: Text("Cancel"),
               isDefaultAction: true,
+              child: const Text("Cancel"),
             ),
             CupertinoDialogAction(
               onPressed: () async {
@@ -133,13 +133,13 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                 debugPrint("User is LogOut");
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                   (route) => false,
                 );
                 utils.showSnackBar(message: "You are now Logout..!", context);
               },
-              child: Text("Logout"),
               isDestructiveAction: true,
+              child: const Text("Logout"),
             ),
           ],
         );
@@ -268,11 +268,11 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                       const Spacer(),
                       Switch(
                         activeColor: Colors.white,
-                        trackOutlineColor: const MaterialStatePropertyAll(Colors.transparent),
-                        thumbColor: const MaterialStatePropertyAll(Colors.white),
+                        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
+                        thumbColor: const WidgetStatePropertyAll(Colors.white),
                         activeTrackColor: Colors.orangeAccent,
-                        trackColor: const MaterialStatePropertyAll(Color(0xff032fd7)),
-                        thumbIcon: MaterialStateProperty.resolveWith(
+                        trackColor: const WidgetStatePropertyAll(Color(0xff032fd7)),
+                        thumbIcon: WidgetStateProperty.resolveWith(
                           (states) {
                             if (states.contains(MaterialState.selected)) {
                               return const Icon(

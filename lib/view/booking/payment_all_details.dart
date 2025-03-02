@@ -56,7 +56,7 @@ class _PaymentAllDetailsState extends State<PaymentAllDetails> {
       backgroundColor: AdaptiveTheme.of(context).mode.isDark ? Colors.black : const Color.fromRGBO(241, 248, 255, 1),
       appBar: AppBar(
         backgroundColor: AdaptiveTheme.of(context).mode.isDark ? Colors.black : const Color.fromRGBO(241, 248, 255, 1),
-        title: Text('Payment Details'),
+        title: const Text('Payment Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -64,7 +64,7 @@ class _PaymentAllDetailsState extends State<PaymentAllDetails> {
           width: 350,
           height: 600,
           isCornerRounded: true,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -83,21 +83,21 @@ class _PaymentAllDetailsState extends State<PaymentAllDetails> {
                       child: Center(
                         child: Text(
                           'Slot No. : ${widget.payment.slotNumber}',
-                          style: TextStyle(color: Colors.green),
+                          style: const TextStyle(color: Colors.green),
                         ),
                       ),
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.location_on_outlined,
                           color: Colors.pink,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
                             "${userModel.city}",
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                           ),
                         )
                       ],
@@ -121,7 +121,7 @@ class _PaymentAllDetailsState extends State<PaymentAllDetails> {
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   textAlign: TextAlign.center,
                   'Please scan your Parking QR Code on the scanner machine to enter.',
                   style: TextStyle(

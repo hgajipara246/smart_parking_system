@@ -19,7 +19,7 @@ class NormalButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white,
-        foregroundColor: Color(0xff0026c2),
+        foregroundColor: const Color(0xff0026c2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -50,7 +50,7 @@ class NormalButton extends StatelessWidget {
             ),
             Text(
               editText ?? "",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: "Avenir",
                 fontWeight: FontWeight.w500,

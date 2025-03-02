@@ -64,7 +64,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
         }
       }
     } catch (e) {
-      print('Error fetching stored date: $e');
+      debugPrint('Error fetching stored date: $e');
     }
 
     setState(() {
@@ -75,7 +75,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   @override
   void initState() {
     super.initState();
-    print("Slot Number is : ${widget.slotNumber}");
+    debugPrint("Slot Number is : ${widget.slotNumber}");
     fetchStoredDate();
   }
 

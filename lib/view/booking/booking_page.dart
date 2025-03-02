@@ -1,4 +1,3 @@
-
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -136,12 +135,12 @@ class _BookingPageState extends State<BookingPage> {
             SensorValueWidget(
               databaseReference: ref.child('slot${index + 1}'),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             RotatedBox(
               quarterTurns: 3,
               child: Text(
                 'Slot ${index + 1}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: "Lato",
                   fontWeight: FontWeight.bold,
                 ),

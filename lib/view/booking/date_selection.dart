@@ -34,14 +34,14 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(18.0),
+            padding: const EdgeInsets.all(18.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'You selected Slot ${widget.slotNumber}',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(height: 10),
                 _buildDefaultSingleDatePickerWithValue(),
@@ -88,13 +88,13 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: AdaptiveTheme.of(context).mode.isDark ? Colors.grey[800] : Color(0xf2ffffff),
+            color: AdaptiveTheme.of(context).mode.isDark ? Colors.grey[800] : const Color(0xf2ffffff),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 5,
                 spreadRadius: 1,
-                offset: Offset(3, 5),
+                offset: const Offset(3, 5),
               ),
             ],
             borderRadius: BorderRadius.circular(20),
@@ -182,7 +182,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
             ),
           ),
         );
-        print("Slot Number is : ${widget.slotNumber}");
+        debugPrint("Slot Number is : ${widget.slotNumber}");
       }
     } catch (e) {
       debugPrint('Error saving date to Firestore: $e');

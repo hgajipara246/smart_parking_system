@@ -39,7 +39,7 @@ class _AdminPanelState extends State<AdminPanel> {
       DateTime startOfToday = DateTime(now.year, now.month, now.day);
       DateTime startOfWeek = startOfToday.subtract(Duration(days: now.weekday - 1));
       DateTime startOfMonth = DateTime(now.year, now.month, 1);
-      DateTime endOfMonth = DateTime(now.year, now.month + 1, 1).subtract(Duration(days: 1));
+      DateTime endOfMonth = DateTime(now.year, now.month + 1, 1).subtract(const Duration(days: 1));
 
       int todayCount = 0;
       int weekCount = 0;
@@ -69,7 +69,7 @@ class _AdminPanelState extends State<AdminPanel> {
           weekCount++;
         }
 
-        if (bookingDate.isAfter(startOfMonth.subtract(Duration(days: 1))) && bookingDate.isBefore(endOfMonth.add(Duration(days: 1)))) {
+        if (bookingDate.isAfter(startOfMonth.subtract(const Duration(days: 1))) && bookingDate.isBefore(endOfMonth.add(const Duration(days: 1)))) {
           monthCount++;
           if (booking.total > maxBill) {
             maxBill = booking.total;
@@ -130,10 +130,10 @@ class _AdminPanelState extends State<AdminPanel> {
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(), // Ensures RefreshIndicator works when child is smaller than screen
+          physics: const AlwaysScrollableScrollPhysics(), // Ensures RefreshIndicator works when child is smaller than screen
           padding: const EdgeInsets.all(16.0),
           child: isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -171,7 +171,7 @@ class _AdminPanelState extends State<AdminPanel> {
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
